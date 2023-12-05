@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCMLxFOOejBzzexh_2fZQsxQ_6A0qC8Mt4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>918732441617</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.prefoods</string>
+	<key>PROJECT_ID</key>
+	<string>prefood-406004</string>
+	<key>STORAGE_BUCKET</key>
+	<string>prefood-406004.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:918732441617:ios:6f7b42f9e9019eb278c9b0</string>
+</dict>
+</plist>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "918732441617",
+    "project_id": "prefood-406004",
+    "storage_bucket": "prefood-406004.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918732441617:android:53a2c37b6a3fa7c078c9b0",
+        "android_client_info": {
+          "package_name": "com.example.prefood"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEpml3W7iPIfDKhex3h03oYI4nZsAHJX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918732441617:android:7d76c5eed2c19e0678c9b0",
+        "android_client_info": {
+          "package_name": "com.example.prefoods"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEpml3W7iPIfDKhex3h03oYI4nZsAHJX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
