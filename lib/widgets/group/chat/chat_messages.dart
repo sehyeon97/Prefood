@@ -37,7 +37,8 @@ class ChatMessages extends ConsumerWidget {
           );
         }
 
-        final loadedMessages = snapshot.data!.data()!['history'];
+        final List loadedMessages = snapshot.data!.data()!['history'];
+        final List orderedLoadedMessages = loadedMessages.reversed.toList();
 
         return ListView.builder(
           padding: const EdgeInsets.only(
@@ -48,14 +49,14 @@ class ChatMessages extends ConsumerWidget {
           reverse: true,
           itemCount: loadedMessages.length,
           itemBuilder: (contxt, index) {
-            final chatMessage = loadedMessages[index]['text'];
+            final chatMessage = orderedLoadedMessages[index]['text'];
             final nextChatMessage = index + 1 < loadedMessages.length
-                ? loadedMessages[index + 1]['text']
+                ? orderedLoadedMessages[index + 1]['text']
                 : null;
 
-            final currentMessageUserId = loadedMessages[index]['userID'];
+            final currentMessageUserId = orderedLoadedMessages[index]['userID'];
             final nextMessageUserId = nextChatMessage != null
-                ? loadedMessages[index]['userID']
+                ? orderedLoadedMessages[index]['userID']
                 : null;
 
             final nextUserIsSame = nextMessageUserId == currentMessageUserId;
@@ -67,7 +68,7 @@ class ChatMessages extends ConsumerWidget {
               );
             } else {
               return MessageBubble.first(
-                username: loadedMessages[index]['username'],
+                username: orderedLoadedMessages[index]['username'],
                 message: chatMessage,
                 isMe: authenticatedUser.uid == currentMessageUserId,
               );

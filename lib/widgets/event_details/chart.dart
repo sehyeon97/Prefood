@@ -20,11 +20,13 @@ class Chart extends ConsumerStatefulWidget {
 
 class _ChartState extends ConsumerState<Chart> {
   List<BarChartGroupData> barChartGroupData = [];
+  SideTitles bottomTitles = SideTitles(showTitles: false);
   bool customInitState = false;
   int maxY = 0;
 
   void getBarData() async {
     List<BarChartGroupData> list = [];
+    SideTitles xAxis = SideTitles(showTitles: false);
 
     final String groupID = ref.watch(groupIDProvider);
     final groupDocument = await FirebaseFirestore.instance
@@ -68,6 +70,7 @@ class _ChartState extends ConsumerState<Chart> {
     setState(() {
       barChartGroupData = list;
       maxY = maxVotes;
+      bottomTitles = xAxis;
     });
   }
 
@@ -124,7 +127,9 @@ class _ChartState extends ConsumerState<Chart> {
                     ),
                     rightTitles: AxisTitles(),
                     topTitles: AxisTitles(),
-                    bottomTitles: AxisTitles(),
+                    bottomTitles: AxisTitles(
+                      sideTitles: bottomTitles,
+                    ),
                   ),
                   barTouchData: BarTouchData(enabled: true),
                   borderData: FlBorderData(show: false),

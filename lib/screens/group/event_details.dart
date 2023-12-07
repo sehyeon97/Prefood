@@ -19,11 +19,9 @@ import 'package:prefoods/widgets/event_details/settings.dart';
 class EventDetailsScreen extends ConsumerWidget {
   const EventDetailsScreen({
     super.key,
-    required this.selectedDay,
     required this.group,
   });
 
-  final DateTime selectedDay;
   final Group group;
 
   static String getModifiedAddress(String address) {
@@ -32,20 +30,19 @@ class EventDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final DateTime selectedDay = ref.watch(selectedDayProvider);
     ref
         .read(addressProvider.notifier)
         .checkFirestoreModifyAddress(ref, selectedDay);
     String address = ref.watch(addressProvider);
 
     void nextPage(latitude, longitude, result, list) {
-      ref.read(selectedDayProvider.notifier).setEventDate(selectedDay);
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (contxt) => MapScreen(
             address: LatLng(latitude, longitude),
             nearbyPlaces: result['results'],
             list: list,
-            selectedDay: selectedDay,
             group: group,
           ),
         ),
@@ -149,7 +146,7 @@ class EventDetailsScreen extends ConsumerWidget {
 
                   const String locale = 'en_US';
                   const String sortBy = 'best_match';
-                  const String limit = '20';
+                  const String limit = '50';
                   final headers = {
                     'Authorization': APIKeys.yelp,
                   };

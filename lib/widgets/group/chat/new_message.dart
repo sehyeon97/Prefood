@@ -31,12 +31,13 @@ class _NewMessageState extends ConsumerState<NewMessage> {
     }
 
     final user = FirebaseAuth.instance.currentUser!;
-    final userData = await FirebaseFirestore.instance
+    final userDocument = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
         .get();
+    final userDetails = userDocument.data()!;
+    final username = userDetails['username'];
 
-    final username = userData.data()!['username'];
     final groupID = ref.watch(groupIDProvider);
 
     final currentChatData =
@@ -59,6 +60,7 @@ class _NewMessageState extends ConsumerState<NewMessage> {
     } else {
       List storedChatHistory = storedChatData['history'];
 
+      // not tested for 50+ messages
       if (storedChatHistory.length > 50) {
         storedChatHistory.removeAt(0);
       }

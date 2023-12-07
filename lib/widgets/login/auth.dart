@@ -27,6 +27,9 @@ class _AuthState extends State<Auth> {
   String _enteredPassword = '';
   String _enteredUsername = '';
 
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   int _selectedTabIndex = 0;
   String _formLabel = 'Signup';
 
@@ -65,6 +68,8 @@ class _AuthState extends State<Auth> {
           setState(() {
             _selectedTabIndex = 1;
             _formLabel = 'Login';
+            usernameController.clear();
+            passwordController.clear();
           });
         } else {
           // log users in
@@ -90,6 +95,13 @@ class _AuthState extends State<Auth> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -173,6 +185,7 @@ class _AuthState extends State<Auth> {
               ),
               if (_selectedTabIndex == 0)
                 TextFormField(
+                  controller: usernameController,
                   decoration: const InputDecoration(
                     label: Center(
                       child: Text('Username'),
@@ -195,6 +208,7 @@ class _AuthState extends State<Auth> {
                   },
                 ),
               TextFormField(
+                controller: passwordController,
                 decoration: const InputDecoration(
                   label: Center(
                     child: Text('Password'),

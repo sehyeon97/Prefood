@@ -7,8 +7,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:prefoods/data/screen_size.dart';
 import 'package:prefoods/models/group.dart';
 import 'package:prefoods/providers/current_group_id_provider.dart';
-import 'package:prefoods/providers/delivery_address_provider.dart';
 import 'package:prefoods/providers/selected_event_day.dart';
+import 'package:prefoods/screens/group/event_details.dart';
 import 'package:prefoods/styles/text.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,14 +18,12 @@ class MapScreen extends ConsumerStatefulWidget {
     required this.address,
     required this.nearbyPlaces,
     required this.list,
-    required this.selectedDay,
     required this.group,
   });
 
   final dynamic address;
   final List nearbyPlaces;
   final dynamic list;
-  final DateTime selectedDay;
   final Group group;
 
   @override
@@ -100,10 +98,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   // when they vote something else, it should remove the previous vote
   void onCastVote() async {
     final String groupID = ref.watch(groupIDProvider);
-    final String address = ref.watch(addressProvider);
-
-    final DateTime current = widget.selectedDay;
-    final DateTime other = ref.watch(selectedDayProvider);
+    final DateTime current = ref.watch(selectedDayProvider);
 
     final groupDocument = await FirebaseFirestore.instance
         .collection('groups')
@@ -115,9 +110,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     dynamic currentEvent;
 
     for (final event in events) {
-      if (current.month == other.month &&
-          current.day == other.day &&
-          current.year == other.year) {
+      if (event['selectedMonth'] == current.month &&
+          event['selectedDay'] == current.day &&
+          event['selectedYear'] == current.year) {
         currentEvent = event;
         events.remove(event);
         break;
@@ -132,22 +127,8 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       restaurantVotes = {...restaurantVotes, details['name']: 1};
     }
 
-    events.add({
-      'deliveryAddress': address,
-      'selectedDay': current.day,
-      'selectedMonth': current.month,
-      'selectedYear': current.year,
-      'restaurantVotes': restaurantVotes,
-    });
-
-    for (final event in events) {
-      if (event['day'] == current.day &&
-          event['month'] == current.month &&
-          event['year'] == current.year) {
-        events.remove(event);
-        break;
-      }
-    }
+    currentEvent['restaurantVotes'] = restaurantVotes;
+    events.add(currentEvent);
 
     await FirebaseFirestore.instance
         .collection('groups')
@@ -166,6 +147,15 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                  builder: (contxt) => EventDetailsScreen(group: widget.group)),
+            );
+          },
+          icon: const Icon(Icons.arrow_back_ios),
+        ),
         title: const Text('Map'),
       ),
       body: SingleChildScrollView(
@@ -307,6 +297,12 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             ElevatedButton(
               onPressed: () {
                 onCastVote();
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (contxt) =>
+                        EventDetailsScreen(group: widget.group),
+                  ),
+                );
               },
               child: const Text('Cast Vote'),
             )

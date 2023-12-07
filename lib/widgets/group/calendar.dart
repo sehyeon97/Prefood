@@ -47,7 +47,6 @@ class _CalendarState extends ConsumerState<Calendar> {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (contxt) => EventDetailsScreen(
-              selectedDay: selectedDay,
               group: widget.group,
             ),
           ),

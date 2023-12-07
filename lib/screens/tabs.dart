@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:prefoods/screens/login.dart';
 
 import 'package:prefoods/screens/tabs/friends_screen.dart';
 import 'package:prefoods/screens/tabs/groups_screen.dart';
@@ -30,6 +31,10 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
+  void _signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +48,11 @@ class _TabsScreenState extends State<TabsScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              FirebaseAuth.instance.signOut();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (contxt) => const LoginScreen(),
+                ),
+              );
             },
             icon: Icon(
               Icons.exit_to_app,

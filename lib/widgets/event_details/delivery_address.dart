@@ -67,6 +67,7 @@ class _DeliveryAddressState extends ConsumerState<DeliveryAddress> {
         ElevatedButton(
           onPressed: () {
             _onSetAddress();
+            Navigator.of(context).pop();
           },
           child: const Text('Set'),
         ),
