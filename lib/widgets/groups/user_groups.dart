@@ -44,7 +44,7 @@ class MyButton extends StatelessWidget {
           await FirebaseFirestore.instance
               .collection('users')
               .doc(user.uid)
-              .set({'groups': userGroups});
+              .set({'groups': userGroups}, SetOptions(merge: true));
         } else {
           await FirebaseFirestore.instance
               .collection('users')
@@ -97,7 +97,7 @@ class MyButton extends StatelessWidget {
           await FirebaseFirestore.instance
               .collection('users')
               .doc(user.uid)
-              .set({'groups': userGroups});
+              .set({'groups': userGroups}, SetOptions(merge: true));
         }
 
         // (2) add user to group's members list

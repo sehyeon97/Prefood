@@ -97,6 +97,10 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   // this should depend on user ID since a user can only vote once
   // when they vote something else, it should remove the previous vote
   void onCastVote() async {
+    if (details['name'] == '') {
+      return;
+    }
+
     final String groupID = ref.watch(groupIDProvider);
     final DateTime current = ref.watch(selectedDayProvider);
 
